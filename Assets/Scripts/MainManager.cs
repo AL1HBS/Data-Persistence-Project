@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ public class MainManager : MonoBehaviour
     public int LineCount = 6;
     public Rigidbody Ball;
 
+    public Text NameText;
     public Text ScoreText;
     public GameObject GameOverText;
     
@@ -36,6 +38,8 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
+
+        NameText.text = $"Name : {GameData.currentPlayerName}";
     }
 
     private void Update()
@@ -71,6 +75,11 @@ public class MainManager : MonoBehaviour
     public void GameOver()
     {
         m_GameOver = true;
+
+        GameData.Instance.AddHighScore(GameData.currentPlayerName,m_Points);
+
+        GameData.Instance.SaveToFile();
+
         GameOverText.SetActive(true);
     }
 }
