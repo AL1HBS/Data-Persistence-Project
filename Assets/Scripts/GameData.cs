@@ -22,8 +22,10 @@ public class GameData
     public static void LoadFromFile()
     {
         string saveFile = Application.persistentDataPath + "/highscore.json";
-        string jsonData = File.ReadAllText(saveFile, System.Text.Encoding.UTF8);
-        _instance = JsonUtility.FromJson<GameData>(jsonData);
+        if(File.Exists(saveFile)){
+            string jsonData = File.ReadAllText(saveFile, System.Text.Encoding.UTF8);
+            _instance = JsonUtility.FromJson<GameData>(jsonData);
+        }
     }
 
     public void SaveToFile()
